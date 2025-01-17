@@ -7,6 +7,7 @@ namespace TryliomUtility
         [SerializeField] private bool _preferLaterals;
 
         private Vector2 _originalPosition;
+        private RectTransform _rectTransform;
 
         private void Awake()
         {
@@ -14,6 +15,8 @@ namespace TryliomUtility
             {
                 _originalPosition = transform.position;
             }
+            
+            _rectTransform = GetComponent<RectTransform>();
         }
 
         private void OnDisable()
@@ -34,7 +37,7 @@ namespace TryliomUtility
         public void Move(Vector2 originPosition, Vector2 originSize, bool forceLaterals = false)
         {
             const int offset = -30;
-            var size = new Vector2(GetComponent<RectTransform>().rect.width, GetComponent<RectTransform>().rect.height);
+            var size = new Vector2(_rectTransform.rect.width, _rectTransform.rect.height);
             var screenSize = new Vector2(Screen.width, Screen.height);
             var preferLaterals = _preferLaterals || forceLaterals;
 
