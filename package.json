@@ -4,6 +4,7 @@
   "displayName": "Tryliom Utility",
   "description": "A set of attributes, variables, references and utility scripts",
   "unity": "2023.2",
+  "documentationUrl": "https://github.com/Tryliom/TryliomUtility",
   "keywords": ["attributes", "extensions", "editor tools"],
   "author": 
   { 
