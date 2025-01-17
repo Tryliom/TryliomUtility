@@ -72,6 +72,18 @@ namespace TryliomUtility
 
             throw new InvalidOperationException("Unsupported type");
         }
+
+        public void Set(T value)
+        {
+            MinValue = value;
+            MaxValue = value;
+        }
+        
+        public void Set(T minValue, T maxValue)
+        {
+            MinValue = minValue;
+            MaxValue = maxValue;
+        }
     }
 
 #if UNITY_EDITOR
