@@ -1,0 +1,12 @@
+{
+  "name": "com.tryliom.tryliomutility",
+  "version": "1.0.0",
+  "displayName": "Tryliom Utility",
+  "description": "A set of attributes, variables, references and utility scripts",
+  "unity": "2023.2",
+  "keywords": ["attributes", "extensions", "editor tools"],
+  "author": 
+  { 
+    "name" : "Alexis Haldy"
+  }
+}
