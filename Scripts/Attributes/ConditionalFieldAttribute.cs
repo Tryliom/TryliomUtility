@@ -26,8 +26,14 @@ namespace TryliomUtility
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
+            if (property.serializedObject.targetObject is not MonoBehaviour and not ScriptableObject)
+            {
+                Logger.LogError("ConditionalFieldAttribute can only be used on MonoBehaviour or ScriptableObject");
+                return;
+            }
+            
             var conditional = (ConditionalFieldAttribute)attribute;
-            var enabled = GetConditionValue(property, conditional.ConditionFieldName, conditional.Inverse);
+            var enabled = PropertyConditionUtility.GetBoolean(property, conditional.ConditionFieldName, conditional.Inverse);
             var wasEnabled = GUI.enabled;
 
             GUI.enabled = enabled;
@@ -43,64 +49,9 @@ namespace TryliomUtility
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             var conditional = (ConditionalFieldAttribute)attribute;
-            var enabled = GetConditionValue(property, conditional.ConditionFieldName, conditional.Inverse);
+            var enabled = PropertyConditionUtility.GetBoolean(property, conditional.ConditionFieldName, conditional.Inverse);
 
             return enabled ? EditorGUI.GetPropertyHeight(property, label) : 0f;
-        }
-
-        public static bool GetConditionValue(SerializedProperty property, string conditionFieldName, bool inverse)
-        {
-            var conditionValue = false;
-            var conditionProperty = property.serializedObject.FindProperty(conditionFieldName);
-
-            if (conditionProperty != null)
-            {
-                if (conditionProperty.propertyType == SerializedPropertyType.Boolean)
-                {
-                    conditionValue = conditionProperty.boolValue;
-                }
-                else if (conditionProperty.propertyType == SerializedPropertyType.ObjectReference)
-                {
-                    conditionValue = conditionProperty.objectReferenceValue != null;
-                }
-            }
-            else
-            {
-                var targetObject = property.serializedObject.targetObject;
-                var conditionField = targetObject.GetType().GetField(conditionFieldName,
-                    BindingFlags.NonPublic | BindingFlags.Public |
-                    BindingFlags.Instance);
-
-                if (conditionField != null && conditionField.FieldType == typeof(bool))
-                {
-                    conditionValue = (bool)conditionField.GetValue(targetObject);
-                }
-                else
-                {
-                    var conditionMethod = targetObject.GetType().GetMethod(conditionFieldName,
-                        BindingFlags.NonPublic | BindingFlags.Public |
-                        BindingFlags.Instance);
-
-                    if (conditionMethod != null && conditionMethod.ReturnType == typeof(bool))
-                    {
-                        conditionValue = (bool)conditionMethod.Invoke(targetObject, null);
-                    }
-                    else
-                    {
-                        if (conditionMethod == null)
-                        {
-                            Logger.LogError("Condition method named [" + conditionFieldName + "] is null");
-                        }
-                        else if (conditionMethod.ReturnType != typeof(bool))
-                        {
-                            Logger.LogError("Condition method named [" + conditionFieldName +
-                                            "] doesn't return a bool");
-                        }
-                    }
-                }
-            }
-
-            return inverse ? !conditionValue : conditionValue;
         }
     }
 #endif

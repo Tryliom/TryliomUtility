@@ -35,6 +35,8 @@ public class Example : MonoBehaviour
 }
 ```
 
+**Will not work for class that doesn't inherit from `MonoBehaviour` or `ScriptableObject`**
+
 ### MinMaxRange
 Create a new `MinMaxRange` with the type you want and set:
 - The default min value
@@ -53,6 +55,8 @@ public class Example : MonoBehaviour
     }
 }
 ```
+
+**Will not work for class that doesn't inherit from `MonoBehaviour` or `ScriptableObject`**
 
 ## RectMover
 Add the `RectMover` component to a RectTransform, call the `MoveTo` method with the target RectTransform and the `MoveTo` method will move the RectTransform to the target RectTransform.

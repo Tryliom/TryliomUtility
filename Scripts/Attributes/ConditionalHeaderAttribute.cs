@@ -29,8 +29,14 @@ namespace TryliomUtility
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var conditional = (ConditionalHeaderAttribute)attribute;
-            var enabled = ConditionalFieldDrawer.GetConditionValue(property, conditional.ConditionFieldName, conditional.Inverse);
+            if (property.serializedObject.targetObject is not MonoBehaviour and not ScriptableObject)
+            {
+                Logger.LogError("ConditionalHeaderAttribute can only be used on MonoBehaviour or ScriptableObject");
+                return;
+            }
+            
+            var conditional = (ConditionalHeaderAttribute) attribute;
+            var enabled = PropertyConditionUtility.GetBoolean(property, conditional.ConditionFieldName, conditional.Inverse);
 
             if (!enabled) return;
 
@@ -48,7 +54,7 @@ namespace TryliomUtility
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             var conditional = (ConditionalHeaderAttribute)attribute;
-            var enabled = ConditionalFieldDrawer.GetConditionValue(property, conditional.ConditionFieldName, conditional.Inverse);
+            var enabled = PropertyConditionUtility.GetBoolean(property, conditional.ConditionFieldName, conditional.Inverse);
 
             if (!enabled) return 0f;
 
