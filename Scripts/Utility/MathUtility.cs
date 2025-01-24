@@ -16,5 +16,10 @@ namespace TryliomUtility
         {
             return new Vector2(Random.Range(min, max), Random.Range(min, max));
         }
+        
+        public static Vector3 RandomVector2AsVector3(float min, float max)
+        {
+            return new Vector3(Random.Range(min, max), Random.Range(min, max));
+        }
     }
 }
