@@ -58,6 +58,21 @@ public class Example : MonoBehaviour
 
 **Will not work for class that doesn't inherit from `MonoBehaviour` or `ScriptableObject`**
 
+### Button Function
+Add the `ButtonFunction` attribute to a method that will call the method.
+```c#
+public class Example : MonoBehaviour
+{
+    [ButtonFunction]
+    public void MyFunction()
+    {
+        Debug.Log("MyFunction");
+    }
+}
+```
+
+**Will not work for class that doesn't inherit from `MonoBehaviour` or `ScriptableObject`**
+
 ## RectMover
 Add the `RectMover` component to a RectTransform, call the `MoveTo` method with the target RectTransform and the `MoveTo` method will move the RectTransform to the target RectTransform.
 
