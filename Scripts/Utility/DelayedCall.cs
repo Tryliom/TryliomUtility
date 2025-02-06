@@ -5,7 +5,8 @@ using UnityEngine;
 namespace TryliomUtility
 {
     /**
-     * Utility class to call a method after a delay (unscaled time)
+     * Utility class to call a method after a delay (unscaled time).
+     * Need to be used with a Coroutine: StartCoroutine(DelayedCall.Call(() => { /* Your code here * / }, delay));
      */
     public static class DelayedCall
     {
