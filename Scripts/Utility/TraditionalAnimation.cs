@@ -14,9 +14,10 @@ namespace TryliomUtility
 
         public bool OneLoop;
 
-        private int _currentSpriteIndex;
         private float _time;
         private float _maxTime;
+        
+        public int SpriteIndex { get; private set; }
 
         public void Init(float maxLifeTime)
         {
@@ -38,36 +39,36 @@ namespace TryliomUtility
 
             if (_time >= _maxTime)
             {
-                if (OneLoop && _currentSpriteIndex == Sprites.Count - 1) return Sprites[_currentSpriteIndex];
+                if (OneLoop && SpriteIndex == Sprites.Count - 1) return Sprites[SpriteIndex];
 
                 _time -= _maxTime;
-                _currentSpriteIndex++;
+                SpriteIndex++;
             }
 
-            if (_currentSpriteIndex >= Sprites.Count)
+            if (SpriteIndex >= Sprites.Count)
             {
-                if (TimeBetweenSprites == 0) _currentSpriteIndex--;
-                else _currentSpriteIndex = 0;
+                if (TimeBetweenSprites == 0) SpriteIndex--;
+                else SpriteIndex = 0;
             }
 
-            return Sprites[_currentSpriteIndex];
+            return Sprites[SpriteIndex];
         }
 
         public void Reset()
         {
-            _currentSpriteIndex = 0;
+            SpriteIndex = 0;
             _time = 0;
             _maxTime = 0;
         }
 
         public bool IsFinished()
         {
-            return _currentSpriteIndex == Sprites.Count - 1 && _time >= _maxTime;
+            return SpriteIndex == Sprites.Count - 1 && _time >= _maxTime;
         }
 
         public float GetCompletion()
         {
-            var completion = (float)_currentSpriteIndex / (Sprites.Count - 1);
+            var completion = (float)SpriteIndex / (Sprites.Count - 1);
 
             if (_maxTime is 0 || _time is 0) return completion;
 
