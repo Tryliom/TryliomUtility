@@ -142,7 +142,19 @@ namespace TryliomUtility
 
     [Serializable]
     public class Vector2Reference : Reference<UnityEngine.Vector2> {}
+    
+    [Serializable]
+    public class Vector3Reference : Reference<UnityEngine.Vector3> {}
 
     [Serializable]
     public class GameObjectReference : Reference<GameObject> {}   
+    
+    [Serializable]
+    public class TransformReference : Reference<Transform> {}
+    
+    [Serializable]
+    public class ColorReference : Reference<Color> {}
+    
+    [Serializable]
+    public class QuaternionReference : Reference<Quaternion> {}
 }
