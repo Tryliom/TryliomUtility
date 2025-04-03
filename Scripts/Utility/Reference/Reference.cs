@@ -9,7 +9,7 @@ using UnityEditor;
 namespace TryliomUtility
 {
      [Serializable]
-     public class Reference<ConstantType>
+     public class Reference<ConstantType> : IResettable
      {
          public bool UseConstant = false;
          public ConstantType ConstantValue;
