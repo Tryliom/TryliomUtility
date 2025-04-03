@@ -79,6 +79,11 @@ namespace TryliomUtility
          {
              return Value;
          }
+         
+         public void ResetValue()
+         {
+             Value = default;
+         }
      }
 
 #if UNITY_EDITOR
@@ -148,7 +153,7 @@ namespace TryliomUtility
 
     [Serializable]
     public class GameObjectReference : Reference<GameObject> {}   
-    
+
     [Serializable]
     public class TransformReference : Reference<Transform> {}
     
