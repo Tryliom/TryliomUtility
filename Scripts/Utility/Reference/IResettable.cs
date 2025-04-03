@@ -1,4 +1,7 @@
-﻿public interface IResettable
+﻿namespace TryliomUtility
 {
-    void ResetValue();
+    public interface IResettable
+    {
+        void ResetValue();
+    }
 }
