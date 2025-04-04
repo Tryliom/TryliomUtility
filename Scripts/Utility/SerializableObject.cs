@@ -72,6 +72,7 @@ namespace TryliomUtility
         public void LoadSerializedData()
         {
             _value = JsonUtility.FromJson(_serializedData, Type.GetType(_typeName));
+            LoadScriptableObjects();
         }
 
         /**
