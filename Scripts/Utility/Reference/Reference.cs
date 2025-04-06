@@ -14,7 +14,6 @@ namespace TryliomUtility
          public bool UseConstant = false;
          public ConstantType ConstantValue;
          public Variable<ConstantType> Variable;
-         public string VariableGUID;
      
          public Reference() {}
      

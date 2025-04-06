@@ -2,26 +2,17 @@
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace TryliomUtility
 {
-    /**
-     * If you want to serialize a class that contains a ScriptableObject, you need to make a field with the name "GUID" at the end of the field name.
-     * Example:
-     *  public class MyClass
-     *  {
-     *      public ScriptableObject MyScriptableObject;
-     *      public string MyScriptableObjectGUID;
-     *  }
-     *
-     *  This class will serialize the ScriptableObject and store its GUID in the MyScriptableObjectGUID field to be able to load it back independently of the machine.
-     */
     [Serializable]
     public class SerializableObject
     {
         [SerializeField] private string _serializedData;
         [SerializeField] private string _typeName;
         [SerializeReference] private object _value;
+        [SerializeField] private List<string> _scriptableObjectGUIDs = new List<string>();
 
         public object Value
         {
@@ -40,7 +31,8 @@ namespace TryliomUtility
                 _value = value;
                 if (value != null)
                 {
-                    ApplyGUIDsRecursively(value);
+                    _scriptableObjectGUIDs.Clear();
+                    ApplyGUIDsRecursively(value, new HashSet<object>());
                 }
                 _serializedData = JsonUtility.ToJson(value);
                 _typeName = value?.GetType().AssemblyQualifiedName;
@@ -53,9 +45,7 @@ namespace TryliomUtility
             set => _typeName = value.AssemblyQualifiedName;
         }
 
-        public SerializableObject()
-        {
-        }
+        public SerializableObject() {}
 
         public SerializableObject(object value)
         {
@@ -79,51 +69,70 @@ namespace TryliomUtility
             Value = _value;
         }
         
-        private void ApplyGUIDsRecursively(object obj)
+        private void ApplyGUIDsRecursively(object obj, HashSet<object> visited)
         {
-            var soFields = obj.GetType().GetFields().Where(f => typeof(ScriptableObject).IsAssignableFrom(f.FieldType));
-            foreach (var field in soFields)
+            if (obj == null || visited.Contains(obj)) return;
+            visited.Add(obj);
+
+            var fields = obj.GetType().GetFields();
+            foreach (var field in fields)
             {
-                var so = field.GetValue(obj) as ScriptableObject;
-                if (so != null)
+                var fieldValue = field.GetValue(obj);
+                if (fieldValue is ScriptableObject so && so != null)
                 {
                     var path = AssetDatabase.GetAssetPath(so);
                     var guid = AssetDatabase.AssetPathToGUID(path);
-                    var soGuidField = obj.GetType().GetField(field.Name + "GUID");
-                    if (soGuidField != null && soGuidField.FieldType == typeof(string))
-                    {
-                        soGuidField.SetValue(obj, guid);
-                    }
-                    ApplyGUIDsRecursively(so);
+                    _scriptableObjectGUIDs.Add(guid);
+                }
+                else if (fieldValue != null && fieldValue.GetType().IsClass && !field.FieldType.IsPrimitive && !field.FieldType.IsValueType)
+                {
+                    ApplyGUIDsRecursively(fieldValue, visited);
                 }
             }
         }
-        
+
         private void LoadScriptableObjects()
         {
             if (_value != null)
             {
-                LoadScriptableObjectsRecursively(_value);
+                var guids = new List<string>(_scriptableObjectGUIDs);
+                guids.Reverse();
+                LoadScriptableObjectsRecursively(_value, new Stack<string>(guids), new HashSet<object>());
             }
         }
 
-        private void LoadScriptableObjectsRecursively(object obj)
+        private void LoadScriptableObjectsRecursively(object obj, Stack<string> guids, HashSet<object> visited)
         {
-            var soGuidFields = obj.GetType().GetFields().Where(f => f.Name.EndsWith("GUID") && f.FieldType == typeof(string));
-            foreach (var guidField in soGuidFields)
+            if (obj == null || guids.Count == 0 || visited.Contains(obj)) return;
+            visited.Add(obj);
+
+            var objectType = obj.GetType();
+            if (!objectType.IsClass || objectType.IsPrimitive || objectType.IsValueType) return;
+
+            var fields = obj.GetType().GetFields();
+            foreach (var field in fields)
             {
-                var guid = guidField.GetValue(obj) as string;
-                if (!string.IsNullOrEmpty(guid))
+                if (guids.Count == 0) return;
+
+                var fieldValue = field.GetValue(obj);
+                if (fieldValue == null && typeof(ScriptableObject).IsAssignableFrom(field.FieldType))
                 {
+                    var guid = guids.Pop();
                     var path = AssetDatabase.GUIDToAssetPath(guid);
-                    var so = AssetDatabase.LoadAssetAtPath<ScriptableObject>(path);
-                    var soFieldName = guidField.Name.Replace("GUID", "");
-                    var soField = obj.GetType().GetField(soFieldName);
-                    if (soField != null && typeof(ScriptableObject).IsAssignableFrom(soField.FieldType))
+                    if (!string.IsNullOrEmpty(path))
                     {
-                        soField.SetValue(obj, so);
-                        LoadScriptableObjectsRecursively(so);
+                        var loadedObject = AssetDatabase.LoadAssetAtPath<ScriptableObject>(path);
+                        field.SetValue(obj, loadedObject);
+                        LoadScriptableObjectsRecursively(loadedObject, guids, visited);
                     }
+                    else
+                    {
+                        Debug.LogError($"Failed to load ScriptableObject with GUID: {guid}");
+                    }
+                }
+                else if (fieldValue != null && fieldValue.GetType().IsClass && !field.FieldType.IsPrimitive && !field.FieldType.IsValueType)
+                {
+                    LoadScriptableObjectsRecursively(fieldValue, guids, visited);
                 }
             }
         }
