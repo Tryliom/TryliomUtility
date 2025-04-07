@@ -10,5 +10,7 @@ namespace TryliomUtility
         [Multiline] public string DeveloperDescription = "";
 #endif
         public TType Value;
+        
+        protected bool DisplayedInInspector = false;
     }
 }
