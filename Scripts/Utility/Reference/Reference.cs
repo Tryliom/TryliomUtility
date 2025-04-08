@@ -14,6 +14,8 @@ namespace TryliomUtility
          public bool UseConstant = false;
          public ConstantType ConstantValue;
          public Variable<ConstantType> Variable;
+         
+         public bool DisplayedInInspector = false;
      
          public Reference() {}
      
@@ -109,22 +111,20 @@ namespace TryliomUtility
             var useConstant = property.FindPropertyRelative("UseConstant");
             var constantValue = property.FindPropertyRelative("ConstantValue");
             var variable = property.FindPropertyRelative("Variable");
-            
-            // Add button to open inspector if not using constant
+            var displayedInInspector = property.FindPropertyRelative("DisplayedInInspector");
+
+            // Add a foldout to show the variable properties
             if (!useConstant.boolValue && variable.objectReferenceValue != null)
             {
-                var variableObject = variable.objectReferenceValue;
-                var displayField = variableObject.GetType().GetField("DisplayedInInspector", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                
-                bool currentValue = (bool) displayField.GetValue(variableObject);
+                bool currentValue = displayedInInspector.boolValue;
                 var rect = new Rect(position);
 
                 rect.yMin += _buttonStyle.margin.top - 3;
                 rect.width = _buttonStyle.fixedWidth + _buttonStyle.margin.right - 5;
-                
+
                 currentValue = EditorGUI.Foldout(rect, currentValue, "");
-                displayField.SetValue(variableObject, currentValue);
-                
+                displayedInInspector.boolValue = currentValue;
+
                 if (currentValue)
                 {
                     EditorGUI.indentLevel++;
@@ -141,9 +141,9 @@ namespace TryliomUtility
                     serializedObject.ApplyModifiedProperties();
                     EditorGUI.indentLevel--;
                 }
-                
-                position.xMin += 15;
             }
+            
+            position.xMin += 15;
 
             var refreshIcon = new GUIContent(EditorGUIUtility.IconContent("Refresh").image, "Toggle between constant and variable");
             var buttonRect = new Rect(position);
