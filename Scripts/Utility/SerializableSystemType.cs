@@ -4,6 +4,7 @@
 //
 // Written by Bryan Keiren (http://www.bryankeiren.com)
 
+using System;
 using UnityEngine;
 
 namespace TryliomUtility
@@ -11,6 +12,11 @@ namespace TryliomUtility
 	[System.Serializable]
 	public class SerializableSystemType
 	{
+		public override int GetHashCode()
+		{
+			return HashCode.Combine(m_Name, m_AssemblyQualifiedName, m_AssemblyName, m_SystemType);
+		}
+
 		[SerializeField] private string m_Name;
 
 		public string Name
