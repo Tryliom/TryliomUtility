@@ -24,7 +24,15 @@ namespace TryliomUtility
         {
             for (var i = _actions.Count - 1; i >= 0; i--)
             {
-                _actions[i].Invoke();
+                var action = _actions[i];
+                
+                if (action.Target is not null && action.Target.Equals(null))
+                {
+                    _actions.RemoveAt(i);
+                    continue;
+                }
+                
+                action.Invoke();
             }
         }
     }
@@ -47,7 +55,15 @@ namespace TryliomUtility
         {
             for (var i = _actions.Count - 1; i >= 0; i--)
             {
-                _actions[i].Invoke(arg1);
+                var action = _actions[i];
+                
+                if (action.Target is not null && action.Target.Equals(null))
+                {
+                    _actions.RemoveAt(i);
+                    continue;
+                }
+                
+                action.Invoke(arg1);
             }
         }
     }
@@ -70,7 +86,15 @@ namespace TryliomUtility
         {
             for (var i = _actions.Count - 1; i >= 0; i--)
             {
-                _actions[i].Invoke(arg1, arg2);
+                var action = _actions[i];
+                
+                if (action.Target is not null && action.Target.Equals(null))
+                {
+                    _actions.RemoveAt(i);
+                    continue;
+                }
+                
+                action.Invoke(arg1, arg2);
             }
         }
     }
@@ -93,7 +117,15 @@ namespace TryliomUtility
         {
             for (var i = _actions.Count - 1; i >= 0; i--)
             {
-                _actions[i].Invoke(arg1, arg2, arg3);
+                var action = _actions[i];
+                
+                if (action.Target is not null && action.Target.Equals(null))
+                {
+                    _actions.RemoveAt(i);
+                    continue;
+                }
+                
+                action.Invoke(arg1, arg2, arg3);
             }
         }
     }
@@ -116,7 +148,15 @@ namespace TryliomUtility
         {
             for (var i = _actions.Count - 1; i >= 0; i--)
             {
-                _actions[i].Invoke(arg1, arg2, arg3, arg4);
+                var action = _actions[i];
+                
+                if (action.Target is not null && action.Target.Equals(null))
+                {
+                    _actions.RemoveAt(i);
+                    continue;
+                }
+                
+                action.Invoke(arg1, arg2, arg3, arg4);
             }
         }
     }
@@ -139,7 +179,15 @@ namespace TryliomUtility
         {
             for (var i = _actions.Count - 1; i >= 0; i--)
             {
-                _actions[i].Invoke(arg1, arg2, arg3, arg4, arg5);
+                var action = _actions[i];
+                
+                if (action.Target is not null && action.Target.Equals(null))
+                {
+                    _actions.RemoveAt(i);
+                    continue;
+                }
+                
+                action.Invoke(arg1, arg2, arg3, arg4, arg5);
             }
         }
     }
