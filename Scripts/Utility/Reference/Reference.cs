@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -9,35 +10,35 @@ using UnityEditor;
 namespace TryliomUtility
 {
      [Serializable]
-     public class Reference<ConstantType> : IResettable
+     public class Reference<TType> : IResettable, IValue<TType>
      {
-         public bool UseConstant = false;
-         public ConstantType ConstantValue;
-         public Variable<ConstantType> Variable;
+         public bool UseLocal = false;
+         public TType LocalValue;
+         public Variable<TType> Variable;
          
          public bool DisplayedInInspector = false;
      
          public Reference() {}
      
-         public Reference(ConstantType value)
+         public Reference(TType value)
          {
-             UseConstant = true;
-             ConstantValue = value;
+             UseLocal = true;
+             LocalValue = value;
+         }
+
+         public Reference(bool useLocal)
+         {
+             UseLocal = useLocal;
          }
          
-         public Reference(bool useConstant)
+         public TType Value 
          {
-             UseConstant = useConstant;
-         }
-     
-         public ConstantType Value
-         {
-             get => UseConstant ? ConstantValue : Variable.Value;
+             get => UseLocal ? LocalValue : Variable.Value;
              set
              {
-                 if (UseConstant)
+                 if (UseLocal)
                  {
-                     ConstantValue = value;
+                     LocalValue = value;
                  }
                  else
                  {
@@ -45,41 +46,39 @@ namespace TryliomUtility
                  }
              }
          }
+    
+         object IValue.Value
+         {
+             get => Value;
+             set
+             {
+                 if (value is Variable<TType> variable)
+                 {
+                     Variable = (Variable<TType>) value;
+                     UseLocal = false;
+                 }
+                 else
+                 {
+                    Value = (TType)value;
+                 }
+             }
+         }
+         
+         public Type Type => typeof(TType);
      
-         public static implicit operator ConstantType(Reference<ConstantType> reference)
+         public static implicit operator TType(Reference<TType> reference)
          {
              return reference.Value;
          }
          
-         public static implicit operator Reference<ConstantType>(Variable<ConstantType> value)
+         public static implicit operator Reference<TType>(Variable<TType> value)
          {
-             return new Reference<ConstantType> {Variable = value};
+             return new Reference<TType> {Variable = value};
          }
          
-         public static implicit operator Reference<ConstantType>(ConstantType value)
+         public static implicit operator Reference<TType>(TType value)
          {
-             return new Reference<ConstantType>(value);
-         }
-         
-         public Type GetConstantType()
-         {
-             return typeof(ConstantType);
-         }
-         
-         public void SetVariable(ScriptableObject variable)
-         {
-             Variable = (Variable<ConstantType>) variable;
-             UseConstant = false;
-         }
-         
-         public void SetValue(ConstantType value)
-         {
-             Value = value;
-         }
-         
-         public ConstantType GetValue()
-         {
-             return Value;
+             return new Reference<TType>(value);
          }
          
          public void ResetValue()
@@ -108,13 +107,13 @@ namespace TryliomUtility
             EditorGUI.BeginChangeCheck();
 
             // Get properties
-            var useConstant = property.FindPropertyRelative("UseConstant");
-            var constantValue = property.FindPropertyRelative("ConstantValue");
+            var useLocal = property.FindPropertyRelative("UseLocal");
+            var localValue = property.FindPropertyRelative("LocalValue");
             var variable = property.FindPropertyRelative("Variable");
             var displayedInInspector = property.FindPropertyRelative("DisplayedInInspector");
 
             // Add a foldout to show the variable properties
-            if (!useConstant.boolValue && variable.objectReferenceValue != null)
+            if (!useLocal.boolValue && variable.objectReferenceValue != null)
             {
                 bool currentValue = displayedInInspector.boolValue;
                 var rect = new Rect(position);
@@ -145,7 +144,7 @@ namespace TryliomUtility
             
             position.xMin += 15;
 
-            var refreshIcon = new GUIContent(EditorGUIUtility.IconContent("Refresh").image, "Toggle between constant and variable");
+            var refreshIcon = new GUIContent(EditorGUIUtility.IconContent("Refresh").image, "Toggle between local and variable");
             var buttonRect = new Rect(position);
 
             buttonRect.yMin += _buttonStyle.margin.top;
@@ -158,10 +157,10 @@ namespace TryliomUtility
 
             if (GUI.Button(buttonRect, refreshIcon, _buttonStyle))
             {
-                useConstant.boolValue = !useConstant.boolValue;
+                useLocal.boolValue = !useLocal.boolValue;
             }
 
-            EditorGUI.PropertyField(position, useConstant.boolValue ? constantValue : variable, GUIContent.none);
+            EditorGUI.PropertyField(position, useLocal.boolValue ? localValue : variable, GUIContent.none);
 
             EditorGUI.indentLevel = indent;
         }

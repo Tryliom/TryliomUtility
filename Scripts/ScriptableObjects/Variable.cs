@@ -9,6 +9,17 @@ namespace TryliomUtility
 #if UNITY_EDITOR
         [Multiline] public string DeveloperDescription = "";
 #endif
-        public TType Value;
+        [SerializeField] private TType _value;
+        public TType Value 
+        {
+            get => _value;
+            set
+            {
+                _value = value;
+                OnValueChanged?.Invoke();
+            }
+        }
+
+        public GameEventData OnValueChanged;
     }
 }
