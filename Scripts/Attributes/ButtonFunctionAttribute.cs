@@ -9,35 +9,36 @@ using UnityEditor;
 namespace TryliomUtility
 {
     [AttributeUsage(AttributeTargets.Method)]
-    public class ButtonFunctionAttribute : PropertyAttribute
+    public class ButtonFunctionAttribute : Attribute
     {}
 
 #if UNITY_EDITOR
-    [CustomEditor(typeof(MonoBehaviour), true)]
-    public class ButtonFunctionEditor : Editor
+    [CustomPropertyDrawer(typeof(ButtonFunctionAttribute), true)]
+    public class ButtonFunctionDrawer : PropertyDrawer
     {
-        public override void OnInspectorGUI()
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            base.OnInspectorGUI();
-
-            var monoBehaviour = (MonoBehaviour)target;
-            var methods = monoBehaviour.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+            var targetObject = property.serializedObject.targetObject;
+            var targetType = targetObject.GetType();
+            var methods = targetType.GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
 
             foreach (var method in methods)
             {
                 var attributes = method.GetCustomAttributes(typeof(ButtonFunctionAttribute), true);
 
-                if (attributes.Length <= 0) continue;
-
-                GUILayout.Space(5);
-
-                if (GUILayout.Button(method.Name))
+                if (attributes.Length > 0)
                 {
-                    method.Invoke(monoBehaviour, null);
+                    if (GUI.Button(new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight), method.Name))
+                    {
+                        method.Invoke(targetObject, null);
+                    }
                 }
-
-                GUILayout.Space(5);
             }
+        }
+
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            return EditorGUIUtility.singleLineHeight * 2; // Ajuste la hauteur si nécessaire
         }
     }
 #endif
