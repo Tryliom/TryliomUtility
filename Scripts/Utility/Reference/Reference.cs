@@ -160,9 +160,32 @@ namespace TryliomUtility
                 useLocal.boolValue = !useLocal.boolValue;
             }
 
-            EditorGUI.PropertyField(position, useLocal.boolValue ? localValue : variable, GUIContent.none);
+            if (useLocal.boolValue && localValue.propertyType == SerializedPropertyType.String)
+            {
+                float textHeight = EditorStyles.textArea.CalcHeight(new GUIContent(localValue.stringValue), position.width);
+                position.height = textHeight;
+                localValue.stringValue = EditorGUI.TextArea(position, localValue.stringValue, EditorStyles.textArea);
+            }
+            else
+            {
+                EditorGUI.PropertyField(position, useLocal.boolValue ? localValue : variable, GUIContent.none);
+            }
 
             EditorGUI.indentLevel = indent;
+        }
+        
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            var useLocal = property.FindPropertyRelative("UseLocal");
+            var localValue = property.FindPropertyRelative("LocalValue");
+
+            if (useLocal.boolValue && localValue.propertyType == SerializedPropertyType.String)
+            {
+                float textHeight = EditorStyles.textArea.CalcHeight(new GUIContent(localValue.stringValue), EditorGUIUtility.currentViewWidth);
+                return textHeight;
+            }
+            
+            return base.GetPropertyHeight(property, label);
         }
     }
 #endif
