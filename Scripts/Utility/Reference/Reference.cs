@@ -207,6 +207,18 @@ namespace TryliomUtility
     
     [Serializable]
     public class Vector3Reference : Reference<UnityEngine.Vector3> {}
+    
+    [Serializable]
+    public class RigidbodyReference : Reference<Rigidbody> {}
+
+    [Serializable]
+    public class Rigidbody2DReference : Reference<Rigidbody2D> {}
+
+    [Serializable]
+    public class ColliderReference : Reference<Collider> {}
+    
+    [Serializable]
+    public class Collider2DReference : Reference<Collider2D> {}
 
     [Serializable]
     public class GameObjectReference : Reference<GameObject> {}   
