@@ -19,6 +19,11 @@ namespace TryliomUtility
         {
             _actions.Remove(action);
         }
+        
+        public void RemoveAll()
+        {
+            _actions.Clear();
+        }
 
         public void Invoke()
         {
@@ -49,6 +54,11 @@ namespace TryliomUtility
         public void Remove(Action<T1> action)
         {
             _actions.Remove(action);
+        }
+        
+        public void RemoveAll()
+        {
+            _actions.Clear();
         }
 
         public void Invoke(T1 arg1)
@@ -81,6 +91,11 @@ namespace TryliomUtility
         {
             _actions.Remove(action);
         }
+        
+        public void RemoveAll()
+        {
+            _actions.Clear();
+        }
 
         public void Invoke(T1 arg1, T2 arg2)
         {
@@ -111,6 +126,11 @@ namespace TryliomUtility
         public void Remove(Action<T1, T2, T3> action)
         {
             _actions.Remove(action);
+        }
+        
+        public void RemoveAll()
+        {
+            _actions.Clear();
         }
 
         public void Invoke(T1 arg1, T2 arg2, T3 arg3)
@@ -143,6 +163,11 @@ namespace TryliomUtility
         {
             _actions.Remove(action);
         }
+        
+        public void RemoveAll()
+        {
+            _actions.Clear();
+        }
 
         public void Invoke(T1 arg1, T2 arg2, T3 arg3, T4 arg4)
         {
@@ -173,6 +198,11 @@ namespace TryliomUtility
         public void Remove(Action<T1, T2, T3, T4, T5> action)
         {
             _actions.Remove(action);
+        }
+        
+        public void RemoveAll()
+        {
+            _actions.Clear();
         }
 
         public void Invoke(T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
