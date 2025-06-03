@@ -77,6 +77,11 @@ namespace TryliomUtility
             return completion;
         }
 
+        public bool IsDefined()
+        {
+            return Sprites.Count > 0;
+        }
+
         public TraditionalAnimation Clone()
         {
             return new TraditionalAnimation()
