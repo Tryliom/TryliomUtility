@@ -29,7 +29,7 @@ namespace TryliomUtility
         {
             var originPosition = originObject.transform.position;
             var originRect = originObject.GetComponent<RectTransform>();
-            var originSize = originRect.rect.size;
+            var originSize = originRect.rect.size + Vector2.one * 10f; // Add some padding to the size
 
             Move(originPosition, originSize, forceLaterals);
         }
