@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Text;
+using System.Text.RegularExpressions;
 
 namespace TryliomUtility
 {
@@ -30,6 +31,62 @@ namespace TryliomUtility
             }
             
             return number;
+        }
+        
+        public static string NicifyVariableName(string input)
+        {
+            var result = new StringBuilder(input.Length * 2);
+
+            var prevIsLetter = false;
+            var prevIsLetterUpper = false;
+            var prevIsDigit = false;
+            var prevIsStartOfWord = false;
+            var prevIsNumberWord = false;
+
+            var firstCharIndex = 0;
+            if (input.StartsWith('_'))
+            {
+                firstCharIndex = 1;
+            }
+            else if (input.StartsWith("m_"))
+            {
+                firstCharIndex = 2;
+            }
+
+            for (var i = input.Length - 1; i >= firstCharIndex; i--)
+            {
+                var currentChar = input[i];
+                var currIsLetter = char.IsLetter(currentChar);
+                
+                if (i == firstCharIndex && currIsLetter)
+                {
+                    currentChar = char.ToUpper(currentChar);
+                }
+                
+                var currIsLetterUpper = char.IsUpper(currentChar);
+                var currIsDigit = char.IsDigit(currentChar);
+                var currIsSpacer = currentChar is ' ' or '_';
+
+                var addSpace = (currIsLetter && !currIsLetterUpper && prevIsLetterUpper) ||
+                               (currIsLetter && prevIsLetterUpper && prevIsStartOfWord) ||
+                               (currIsDigit && prevIsStartOfWord) ||
+                               (!currIsDigit && prevIsNumberWord) ||
+                               (currIsLetter && !currIsLetterUpper && prevIsDigit);
+
+                if (!currIsSpacer && addSpace)
+                {
+                    result.Insert(0, ' ');
+                }
+
+                result.Insert(0, currentChar);
+                prevIsStartOfWord = currIsLetter && currIsLetterUpper && prevIsLetter && !prevIsLetterUpper;
+                prevIsNumberWord = currIsDigit && prevIsLetter && !prevIsLetterUpper;
+                prevIsLetterUpper = currIsLetter && currIsLetterUpper;
+                prevIsLetter = currIsLetter;
+                prevIsDigit = currIsDigit;
+            }
+
+            return result.ToString();
         }
     }
     
