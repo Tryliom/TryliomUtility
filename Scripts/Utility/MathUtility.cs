@@ -12,14 +12,24 @@ namespace TryliomUtility
             return rotation * Vector2.right;
         }
 
-        public static Vector2 RandomVector2(float min, float max)
+        public static Vector2 RandomVec2(float min, float max)
         {
             return new Vector2(Random.Range(min, max), Random.Range(min, max));
         }
         
-        public static Vector3 RandomVector2AsVector3(float min, float max)
+        public static Vector2 RandomVec2(float range)
+        {
+            return new Vector2(Random.Range(-range, range), Random.Range(-range, range));
+        }
+        
+        public static Vector3 RandomVec2AsVec3(float min, float max)
         {
             return new Vector3(Random.Range(min, max), Random.Range(min, max));
+        }
+        
+        public static Vector3 RandomVec2AsVec3(float range)
+        {
+            return new Vector3(Random.Range(-range, range), Random.Range(-range, range));
         }
     }
 }
