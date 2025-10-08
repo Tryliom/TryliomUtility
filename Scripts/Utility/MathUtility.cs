@@ -46,5 +46,10 @@ namespace TryliomUtility
         {
             return Mathf.Atan2(vector.y, vector.x) * Mathf.Rad2Deg;
         }
+
+        public static float GetAngle(Vector3 vector)
+        {
+            return Mathf.Atan2(vector.y, vector.x) * Mathf.Rad2Deg;
+        }
     }
 }
