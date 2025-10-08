@@ -11,6 +11,16 @@ namespace TryliomUtility
 
             return rotation * Vector2.right;
         }
+        
+        public static Vector2 GetDirection2D(float angle)
+        {
+            return new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+        }
+
+        public static Vector3 GetDirection3D(float angle)
+        {
+            return Quaternion.AngleAxis(angle, Vector3.forward) * Vector3.right;
+        }
 
         public static Vector2 RandomVec2(float min, float max)
         {
