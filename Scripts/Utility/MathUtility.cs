@@ -41,5 +41,10 @@ namespace TryliomUtility
         {
             return new Vector3(Random.Range(-range, range), Random.Range(-range, range));
         }
+
+        public static float GetAngle(Vector2 vector)
+        {
+            return Mathf.Atan2(vector.y, vector.x) * Mathf.Rad2Deg;
+        }
     }
 }
