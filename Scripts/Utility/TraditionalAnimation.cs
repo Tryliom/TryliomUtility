@@ -76,6 +76,12 @@ namespace TryliomUtility
 
             return completion;
         }
+        
+        public void SetTimeBetweenSprites(float timeBetweenSprites)
+        {
+            TimeBetweenSprites = timeBetweenSprites;
+            _maxTime = TimeBetweenSprites;
+        }
 
         public bool IsDefined()
         {
