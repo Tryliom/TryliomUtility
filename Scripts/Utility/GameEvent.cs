@@ -43,6 +43,8 @@ namespace TryliomUtility
         {
             for (var i = _topPriorityActions.Count - 1; i >= 0; i--)
             {
+                if (i >= _topPriorityActions.Count) continue;
+                
                 var action = _topPriorityActions[i];
                 
                 if (action.Target is not null && action.Target.Equals(null))
@@ -56,6 +58,8 @@ namespace TryliomUtility
             
             for (var i = _actions.Count - 1; i >= 0; i--)
             {
+                if (i >= _actions.Count) continue;
+                
                 var action = _actions[i];
                 
                 if (action.Target is not null && action.Target.Equals(null))
@@ -69,6 +73,8 @@ namespace TryliomUtility
             
             for (var i = _lowPriorityActions.Count - 1; i >= 0; i--)
             {
+                if (i >= _lowPriorityActions.Count) continue;
+                
                 var action = _lowPriorityActions[i];
                 
                 if (action.Target is not null && action.Target.Equals(null))
@@ -121,6 +127,8 @@ namespace TryliomUtility
         {
             for (var i = _topPriorityActions.Count - 1; i >= 0; i--)
             {
+                if (i >= _topPriorityActions.Count) continue;
+                
                 var action = _topPriorityActions[i];
                 
                 if (action.Target is not null && action.Target.Equals(null))
@@ -134,6 +142,8 @@ namespace TryliomUtility
             
             for (var i = _actions.Count - 1; i >= 0; i--)
             {
+                if (i >= _actions.Count) continue;
+                
                 var action = _actions[i];
                 
                 if (action.Target is not null && action.Target.Equals(null))
@@ -147,6 +157,8 @@ namespace TryliomUtility
             
             for (var i = _lowPriorityActions.Count - 1; i >= 0; i--)
             {
+                if (i >= _lowPriorityActions.Count) continue;
+                
                 var action = _lowPriorityActions[i];
                 
                 if (action.Target is not null && action.Target.Equals(null))
@@ -199,6 +211,8 @@ namespace TryliomUtility
         {
             for (var i = _topPriorityActions.Count - 1; i >= 0; i--)
             {
+                if (i >= _topPriorityActions.Count) continue;
+                
                 var action = _topPriorityActions[i];
                 
                 if (action.Target is not null && action.Target.Equals(null))
@@ -212,6 +226,8 @@ namespace TryliomUtility
             
             for (var i = _actions.Count - 1; i >= 0; i--)
             {
+                if (i >= _actions.Count) continue;
+                
                 var action = _actions[i];
                 
                 if (action.Target is not null && action.Target.Equals(null))
@@ -225,6 +241,8 @@ namespace TryliomUtility
             
             for (var i = _lowPriorityActions.Count - 1; i >= 0; i--)
             {
+                if (i >= _lowPriorityActions.Count) continue;
+                
                 var action = _lowPriorityActions[i];
                 
                 if (action.Target is not null && action.Target.Equals(null))
@@ -277,6 +295,8 @@ namespace TryliomUtility
         {
             for (var i = _topPriorityActions.Count - 1; i >= 0; i--)
             {
+                if (i >= _topPriorityActions.Count) continue;
+                
                 var action = _topPriorityActions[i];
                 
                 if (action.Target is not null && action.Target.Equals(null))
@@ -290,6 +310,8 @@ namespace TryliomUtility
             
             for (var i = _actions.Count - 1; i >= 0; i--)
             {
+                if (i >= _actions.Count) continue;
+                
                 var action = _actions[i];
                 
                 if (action.Target is not null && action.Target.Equals(null))
@@ -303,6 +325,8 @@ namespace TryliomUtility
             
             for (var i = _lowPriorityActions.Count - 1; i >= 0; i--)
             {
+                if (i >= _lowPriorityActions.Count) continue;
+                
                 var action = _lowPriorityActions[i];
                 
                 if (action.Target is not null && action.Target.Equals(null))
@@ -355,6 +379,8 @@ namespace TryliomUtility
         {
             for (var i = _topPriorityActions.Count - 1; i >= 0; i--)
             {
+                if (i >= _topPriorityActions.Count) continue;
+                
                 var action = _topPriorityActions[i];
                 
                 if (action.Target is not null && action.Target.Equals(null))
@@ -368,6 +394,8 @@ namespace TryliomUtility
             
             for (var i = _actions.Count - 1; i >= 0; i--)
             {
+                if (i >= _actions.Count) continue;
+                
                 var action = _actions[i];
                 
                 if (action.Target is not null && action.Target.Equals(null))
@@ -381,6 +409,8 @@ namespace TryliomUtility
             
             for (var i = _lowPriorityActions.Count - 1; i >= 0; i--)
             {
+                if (i >= _lowPriorityActions.Count) continue;
+                
                 var action = _lowPriorityActions[i];
                 
                 if (action.Target is not null && action.Target.Equals(null))
@@ -433,6 +463,8 @@ namespace TryliomUtility
         {
             for (var i = _topPriorityActions.Count - 1; i >= 0; i--)
             {
+                if (i >= _topPriorityActions.Count) continue;
+                
                 var action = _topPriorityActions[i];
                 
                 if (action.Target is not null && action.Target.Equals(null))
@@ -446,6 +478,8 @@ namespace TryliomUtility
             
             for (var i = _actions.Count - 1; i >= 0; i--)
             {
+                if (i >= _actions.Count) continue;
+                
                 var action = _actions[i];
                 
                 if (action.Target is not null && action.Target.Equals(null))
@@ -459,6 +493,8 @@ namespace TryliomUtility
             
             for (var i = _lowPriorityActions.Count - 1; i >= 0; i--)
             {
+                if (i >= _lowPriorityActions.Count) continue;
+                
                 var action = _lowPriorityActions[i];
                 
                 if (action.Target is not null && action.Target.Equals(null))
