@@ -12,30 +12,44 @@ namespace TryliomUtility
         private readonly List<Action> _actions = new();
         private readonly List<Action> _lowPriorityActions = new();
         
+        /**
+         * Will subscribe the action to the event with low priority (called after normal priority).
+         */
         public void AddLowPriority(Action action)
         {
             _lowPriorityActions.Add(action);
         }
 
+        /**
+         * Will subscribe the action to the event.
+         */
         public void Add(Action action)
         {
             _actions.Add(action);
         }
         
+        /**
+         * Will subscribe the action to the event with top priority (called before normal priority).
+         */
         public void AddTopPriority(Action action)
         {
             _topPriorityActions.Add(action);
         }
 
+        /**
+         * Will unsubscribe the action from the event from any priority level.
+         */
         public void Remove(Action action)
         {
             _actions.Remove(action);
+            _lowPriorityActions.Remove(action);
             _topPriorityActions.Remove(action);
         }
         
         public void RemoveAll()
         {
             _actions.Clear();
+            _lowPriorityActions.Clear();
             _topPriorityActions.Clear();
         }
 
@@ -94,21 +108,33 @@ namespace TryliomUtility
         private readonly List<Action<T1>> _actions = new();
         private readonly List<Action<T1>> _lowPriorityActions = new();
         
+        /**
+         * Will subscribe the action to the event with low priority (called after normal priority).
+         */
         public void AddLowPriority(Action<T1> action)
         {
             _lowPriorityActions.Add(action);
         }
 
+        /**
+         * Will subscribe the action to the event.
+         */
         public void Add(Action<T1> action)
         {
             _actions.Add(action);
         }
         
+        /**
+         * Will subscribe the action to the event with top priority (called before normal priority).
+         */
         public void AddTopPriority(Action<T1> action)
         {
             _topPriorityActions.Add(action);
         }
-
+        
+        /**
+         * Will unsubscribe the action from the event from any priority level.
+         */
         public void Remove(Action<T1> action)
         {
             _actions.Remove(action);
@@ -178,21 +204,33 @@ namespace TryliomUtility
         private readonly List<Action<T1, T2>> _actions = new();
         private readonly List<Action<T1, T2>> _lowPriorityActions = new();
         
+        /**
+         * Will subscribe the action to the event with low priority (called after normal priority).
+         */
         public void AddLowPriority(Action<T1, T2> action)
         {
             _lowPriorityActions.Add(action);
         }
 
+        /**
+         * Will subscribe the action to the event.
+         */
         public void Add(Action<T1, T2> action)
         {
             _actions.Add(action);
         }
         
+        /**
+         * Will subscribe the action to the event with top priority (called before normal priority).
+         */
         public void AddTopPriority(Action<T1, T2> action)
         {
             _topPriorityActions.Add(action);
         }
 
+        /**
+         * Will unsubscribe the action from the event from any priority level.
+         */
         public void Remove(Action<T1, T2> action)
         {
             _actions.Remove(action);
@@ -262,21 +300,33 @@ namespace TryliomUtility
         private readonly List<Action<T1, T2, T3>> _actions = new();
         private readonly List<Action<T1, T2, T3>> _lowPriorityActions = new();
         
+        /**
+         * Will subscribe the action to the event with low priority (called after normal priority).
+         */
         public void AddLowPriority(Action<T1, T2, T3> action)
         {
             _lowPriorityActions.Add(action);
         }
 
+        /**
+         * Will subscribe the action to the event.
+         */
         public void Add(Action<T1, T2, T3> action)
         {
             _actions.Add(action);
         }
         
+        /**
+         * Will subscribe the action to the event with top priority (called before normal priority).
+         */
         public void AddTopPriority(Action<T1, T2, T3> action)
         {
             _topPriorityActions.Add(action);
         }
 
+        /**
+         * Will unsubscribe the action from the event from any priority level.
+         */
         public void Remove(Action<T1, T2, T3> action)
         {
             _actions.Remove(action);
@@ -346,21 +396,33 @@ namespace TryliomUtility
         private readonly List<Action<T1, T2, T3, T4>> _actions = new();
         private readonly List<Action<T1, T2, T3, T4>> _lowPriorityActions = new();
         
+        /**
+         * Will subscribe the action to the event with low priority (called after normal priority).
+         */
         public void AddLowPriority(Action<T1, T2, T3, T4> action)
         {
             _lowPriorityActions.Add(action);
         }
 
+        /**
+         * Will subscribe the action to the event.
+         */
         public void Add(Action<T1, T2, T3, T4> action)
         {
             _actions.Add(action);
         }
         
+        /**
+         * Will subscribe the action to the event with top priority (called before normal priority).
+         */
         public void AddTopPriority(Action<T1, T2, T3, T4> action)
         {
             _topPriorityActions.Add(action);
         }
 
+        /**
+         * Will unsubscribe the action from the event from any priority level.
+         */
         public void Remove(Action<T1, T2, T3, T4> action)
         {
             _actions.Remove(action);
@@ -430,21 +492,33 @@ namespace TryliomUtility
         private readonly List<Action<T1, T2, T3, T4, T5>> _actions = new();
         private readonly List<Action<T1, T2, T3, T4, T5>> _lowPriorityActions = new();
         
+        /**
+         * Will subscribe the action to the event with low priority (called after normal priority).
+         */
         public void AddLowPriority(Action<T1, T2, T3, T4, T5> action)
         {
             _lowPriorityActions.Add(action);
         }
 
+        /**
+         * Will subscribe the action to the event.
+         */
         public void Add(Action<T1, T2, T3, T4, T5> action)
         {
             _actions.Add(action);
         }
         
+        /**
+         * Will subscribe the action to the event with top priority (called before normal priority).
+         */
         public void AddTopPriority(Action<T1, T2, T3, T4, T5> action)
         {
             _topPriorityActions.Add(action);
         }
 
+        /**
+         * Will unsubscribe the action from the event from any priority level.
+         */
         public void Remove(Action<T1, T2, T3, T4, T5> action)
         {
             _actions.Remove(action);
