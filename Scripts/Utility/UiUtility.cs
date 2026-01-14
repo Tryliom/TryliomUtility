@@ -7,7 +7,7 @@ namespace TryliomUtility
         /**
          * Resize a scroll view to fit its content.
          */
-        public static void ResizeScrollView(RectTransform scrollView)
+        public static void ResizeScrollView(RectTransform scrollView, float offset = 0f)
         {
             var minY = float.MaxValue;
             var maxY = float.MinValue;
@@ -33,8 +33,9 @@ namespace TryliomUtility
                 }
             }
             
+            offset += sizeMaxY + sizeMinY;
+            
             var offsetY = -minY / 2f;
-            var offset = sizeMaxY + sizeMinY;
             var totalHeight = -minY + offset;
             
             foreach (RectTransform child in scrollView)
