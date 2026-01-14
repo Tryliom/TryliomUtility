@@ -23,13 +23,13 @@ namespace TryliomUtility
                 if (y > maxY)
                 {
                     maxY = y;
-                    sizeMaxY = Mathf.Max(sizeMaxY, child.rect.height / 2f);
+                    sizeMaxY = Mathf.Max(sizeMaxY, child.sizeDelta.y * 0.5f);
                 }
                 
                 if (y < minY)
                 {
                     minY = y;
-                    sizeMinY = Mathf.Max(sizeMinY, child.rect.height / 2f);
+                    sizeMinY = Mathf.Max(sizeMinY, child.sizeDelta.y * 0.5f);
                 }
             }
             
