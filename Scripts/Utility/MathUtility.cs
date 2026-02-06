@@ -4,6 +4,11 @@ namespace TryliomUtility
 {
     public static class MathUtility
     {
+	    public static Vector3 GetDirection(Vector3 from, Vector3 to)
+	    {
+		    return (to - from).normalized;
+	    }
+	    
         public static Vector3 GetDirection(Vector2 normalizedDirection, float addedAngle = 0f)
         {
             var angle = Mathf.Atan2(normalizedDirection.y, normalizedDirection.x) * Mathf.Rad2Deg;
